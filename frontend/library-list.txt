@@ -1,0 +1,8 @@
+swiper.js
+framer motion
+react-fast-marquee
+mapbox gl js
+react leaflet (for maps)
+react-hook-form
+imagebb
+tanstack query

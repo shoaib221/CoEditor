@@ -1,0 +1,16 @@
+model -> page -> data fetching -> styling
+
+context -> hook -> page -> main
+
+
+
+
+
+#todo
+1. Forms must include validation, error messages, success states, and loaders.
+    
+
+
+
+
+

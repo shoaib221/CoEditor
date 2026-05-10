@@ -1,0 +1,16 @@
+
+
+.received {
+    margin-right: auto;
+    flex-direction: row;
+    
+}
+
+
+.sent {
+    margin-left: auto;
+    flex-direction: row-reverse;
+    
+}
+
+   

@@ -1,0 +1,29 @@
+
+
+.box-1 {
+    border-radius: 10px;
+    box-shadow:
+        0 0 .5rem var(--shadow-1),
+        0 0 1rem var(--shadow-2);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.box-shadow-1 {
+    box-shadow:
+        0 0 .5rem var(--shadow-1),
+        0 0 1rem var(--shadow-2);
+}
+
+.box-01 {
+    padding: .5rem;
+    border-radius: .5rem;
+}
+
+.box-01:hover {
+    box-shadow:
+        0 0 .5rem var(--shadow-1),
+        0 0 1rem var(--shadow-2);
+}
+

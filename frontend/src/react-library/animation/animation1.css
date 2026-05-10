@@ -1,0 +1,32 @@
+.wave-bg {
+
+	background: linear-gradient(80deg,
+			#001e43,
+			#003d19,
+			#4b0000
+		);
+	background-size: 1000% 1000%;
+	animation: waveGradient 10s ease infinite;
+}
+
+@keyframes waveGradient {
+	0% {
+		background-position: 0% 0%;
+	}
+
+	25% {
+		background-position: 50% 0%;
+	}
+
+	50% {
+		background-position: 100% 0%;
+	}
+
+	75% {
+		background-position: 50% 0%;
+	}
+
+	100% {
+		background-position: 0% 0%;
+	}
+}

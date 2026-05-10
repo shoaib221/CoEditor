@@ -1,0 +1,28 @@
+.option {
+    background-color: var(--color1);
+    color: var(--color2);
+
+    cursor: pointer;
+    padding: .25rem;
+    border-radius: .5rem;
+    transition: all 0.5s;
+}
+
+
+
+.option.selected {
+    background-color: var(--color4);
+    color: var(--color1)
+}
+
+@media screen and (min-width: 1024px) {
+    .option {
+        box-shadow: 1px 1px 4px var(--color2);
+    }
+
+    .option:hover {
+        box-shadow: 1px 1px 8px var(--color2);
+        opacity: .8;
+    }
+
+}

@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+
+
+
+* {
+	box-sizing: border-box;
+}
+
+
+
+
+html {
+	font-family: "Merriweather", serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	font-variation-settings:
+		"wdth" 100;
+}
+
+
+
+.cen-ver {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.cen-hor {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+@media screen and (max-width: 1024px) {
+	html {
+		font-size: 14px;
+	}
+}
+
+
+@media screen and (max-width: 768px) {
+	html {
+		font-size: 12px;
+	}
+}

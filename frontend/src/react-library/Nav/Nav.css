@@ -1,0 +1,119 @@
+
+
+
+
+@keyframes grow {
+    from {
+        height: 0%;
+    }
+
+    to {
+        height: 100%;
+    }
+}
+
+@keyframes grow1 {
+    from {
+        height: 100%;
+    }
+    to {
+        height: 0%;
+    }
+}
+
+.bar {
+    width: 100%;
+    animation: grow 0.1s ease-in-out forwards;
+}
+
+.bar-rev {
+    animation: grow1 0.1s ease-in-out forwards;
+}
+
+.style1 {
+    background-color: var(--color2);
+    color: var(--color1);
+    width: 100%;
+    padding: .5rem;
+    text-align: center;
+    border-radius: .5rem;
+}
+
+
+/* ###################################### option bar ############################### */
+
+#optionbar {
+	display: flex;
+	background-color: var(--color2);
+	color: var(--color4);
+	height: 2.5rem;
+	position: relative;
+	overflow: auto;
+	align-items: center;
+
+}
+
+@keyframes anim1 {
+	from { transform: translateX(-30rem); }
+	to { transform: translateX(0); }
+}
+
+@keyframes anim2 {
+	from { transform: translateX(0); }
+	to { transform: translateX(-30rem); }
+}
+
+@keyframes left-swap {
+	from { transform: translateX(0%); }
+	to { transform: translateX(-50%); }
+}
+
+@keyframes right-swap {
+	from { transform: translateX(-50%); }
+	to { transform: translateX(0%); }
+}
+
+h2 {
+	color: black;
+}
+
+#slidein {
+	position: relative;
+	animation: anim1 0.3s  forwards;
+	width: 30rem
+	
+}
+
+#left-slide {
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background-color: rgb( 0, 0, 0, .5 );
+	width: 100vw;
+	height: 100vh;
+	display: none;
+
+}
+
+#left-swap .links:hover {
+	background-color: rgb(220, 221, 222);
+}
+
+.oplink {
+	
+	text-decoration: none;
+	color: var(--color4);
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	padding-left: .5rem;
+	padding-right: .5rem;
+}
+
+.oplink.selected {
+	border-bottom: 1px solid var(--color4);
+	
+}
+

@@ -1,0 +1,16 @@
+.class-1 {
+    padding: .5rem;
+    border-radius: .5rem;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.active-navi {
+    color: var(--color4);
+    border-radius: .5rem;
+    font-weight: 700;
+}
