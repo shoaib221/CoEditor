@@ -139,6 +139,8 @@ const UpdateProfile = async (req, res, next) => {
 
         let user = await User.findOne({ username: req.user_email })
 
+        console.log(req.body)
+
         user = await User.findByIdAndUpdate(
             user._id,
             {

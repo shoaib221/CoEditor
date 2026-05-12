@@ -9,13 +9,14 @@ import { FaGraduationCap } from "react-icons/fa6";
 import { ThemeButton3, useThemeContext } from '../Theme/Theme.jsx';
 import { ProfileLogo1 } from './profile.jsx';
 import { TbMessageCircleHeart } from "react-icons/tb";
+import { FaCode } from "react-icons/fa";
 
 
 export const Logo = () => {
     return (
         <div className='h-[3rem] text-[var(--color4)] flex gap-2' >
-            <TbMessageCircleHeart className='h-full text-2xl' />
-            <div className='cen-ver font-black' >Chat.e</div>
+            <FaCode className='h-full text-2xl' />
+            <div className='cen-ver font-black' >CoEditor</div>
         </div>
     )
 }
@@ -41,7 +42,7 @@ export const Nav = () => {
     const [ navBar, setNavBar ] = useState(false);
 
     return (
-        <nav id='top' className='z-30 bg-(--color1) flex h-14 justify-between p-4 items-center fixed top-0 w-full max-w-[1800px] border-b-2 border-(--color1a)' >
+        <nav id='top' className='z-30 bg-(--color1) flex h-[3rem] justify-between p-4 items-center top-0 w-full border-(--color1a)' >
             
             <Logo />
 

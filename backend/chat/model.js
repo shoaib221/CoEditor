@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 import { type } from "os";
 import { User } from "../auth/model.js";
+import { ref } from "process";
 
 
 const MessageSchema = new mongoose.Schema({
@@ -30,74 +31,52 @@ export const Message = mongoose.model('Message', MessageSchema);
 
 
 const GroupSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    admin: {
-        type: String,
-        required: true
-    }
-},
-    { timestamps: true }
-)
+    name: String,
 
-GroupSchema.index({ name: 1, admin: 1 }, { unique: true })
+    members: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+
+    admin: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
+
+}, { timestamps: true });
+
+
+GroupSchema.index({ name: 1, admin: 1 }, { unique: true });
 
 export const Group = mongoose.model("Group", GroupSchema);
 
-const GroupMembersSchema = new mongoose.Schema({
-    group_id: {
-        type: String,
-        required: true
-    },
-    group_name: {
-        type: String,
-        required: true
-    },
-    member: {
-        type: String,
-        required: true
-    },
-    photo: {
-        type: String,
-        required: true
-    },
-    admin: {
-        type: String,
-        required: true
-    }
-},
-    { timestamps: true }
-)
 
-GroupMembersSchema.index({ group_id: 1, member: 1 }, { unique: true })
 
-export const GroupMembers = mongoose.model("GroupMember", GroupMembersSchema)
 
 const GroupMessageSchema = new mongoose.Schema({
     group_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Group"
+    },
+    sender_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
+    type: {
         type: String,
-        required: true
+        required: true,
+        enum: ["text", "image", "video", "audio"]
     },
-    sender: {
-        type: String,
-        required: true
-    },
-    text: {
-        type: String
-    },
-    mediaType: {
-        type: String
-    },
-    mediaURL: {
-        type: String,
-    },
-    createdAt: {
+    content: {
         type: String,
         required: true
     }
-})
+
+}, { timestamps: true } );
 
 
 export const GroupMessage = mongoose.model("GroupMessage", GroupMessageSchema);

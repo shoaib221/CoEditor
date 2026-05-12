@@ -334,7 +334,8 @@ export const Unfriend = async (req, res, next) => {
         return res.status(200).json({ message: "success" })
     }
     catch (err) {
-        return res.status(400).json({ message: "failed" })
+        console.log(err.message)
+        return res.status(400).json({ error: err.message })
     }
 }
 

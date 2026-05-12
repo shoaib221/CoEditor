@@ -2,22 +2,23 @@ import express from "express";
 export const chatRouter = express.Router();
 import { requireAuth } from "../auth/middlewire.js";
 import { AddToGroup, CreateGroup,  CreateStory, DeleteFromGroup, DeleteGroup, 
-            FetchGroupMembers, FetchGroupMessage, FetchGroups, fetchMessage, FetchStory, FetchUsers, GroupMessageCont, LeaveGroup, sendMessage } from "./controller.js";
+            FetchGroupMembers, FetchGroupMessage, FetchGroups, fetchMessage, FetchStory, FetchUsers, GroupMessageCont, LeaveGroup, sendGroupMessage, sendMessage } from "./controller.js";
 import { CancelRequest, ChatTest, GetFriendRequests, GetFriends, GetSentRequests, GetUsers, RejectRequest, SendFriendRequest, Unfriend } from "./controller2.js";
 
 
 
 chatRouter.post("/fetch-message", requireAuth, fetchMessage);
 chatRouter.post("/send-message", requireAuth, sendMessage);
+chatRouter.post("/send-group-message", requireAuth, sendGroupMessage);
 chatRouter.get("/fetch-users", requireAuth, FetchUsers);
-chatRouter.post("/creategroup", requireAuth, CreateGroup);
-chatRouter.get("/fetchgroups", requireAuth, FetchGroups);
-chatRouter.post("/addtogroup", requireAuth, AddToGroup);
-chatRouter.post("/fetchgroupmembers", requireAuth, FetchGroupMembers);
-chatRouter.post("/deletemember", requireAuth, DeleteFromGroup);
-chatRouter.post("/deletegroup", requireAuth, DeleteGroup);
-chatRouter.post("/leavegroup", requireAuth, LeaveGroup);
-chatRouter.post("/fetchgroupmessage", requireAuth, FetchGroupMessage);
+chatRouter.post("/create-group", requireAuth, CreateGroup);
+chatRouter.get("/fetch-groups", requireAuth, FetchGroups);
+chatRouter.post("/add-to-group", requireAuth, AddToGroup);
+chatRouter.post("/fetch-group-members", requireAuth, FetchGroupMembers);
+chatRouter.post("/remove-from-group", requireAuth, DeleteFromGroup);
+chatRouter.post("/delete-group", requireAuth, DeleteGroup);
+chatRouter.post("/leave-group", requireAuth, LeaveGroup);
+chatRouter.get("/fetch-group-message/:id", requireAuth, FetchGroupMessage);
 chatRouter.post("/group_message", requireAuth, GroupMessageCont);
 chatRouter.post("/create-story", CreateStory);
 chatRouter.get("/fetch-story", FetchStory);

@@ -14,7 +14,7 @@ export const SocketProvider = ({ children }) => {
 
 
     useEffect(() => {
-        if (!user) return;
+        return; // 🔥 TEMP FIX  
 
         let socketInstance;
 
@@ -51,7 +51,7 @@ export const SocketProvider = ({ children }) => {
     }, [user]);
 
     return (
-        <SocketContext.Provider value={{ socket, onlineUsers }}>
+        <SocketContext.Provider value={{ socket, onlineUsers, setOnlineUsers }}>
             {children}
         </SocketContext.Provider>
     );

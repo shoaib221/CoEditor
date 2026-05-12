@@ -2,7 +2,7 @@
 
 import { useAuthContext } from "@/react-library/auth/context";
 import { useSocketContext } from "@/react-library/socket/socket";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegSmile } from "react-icons/fa";
 import { AiOutlinePicture } from "react-icons/ai";
@@ -18,73 +18,106 @@ import { NotFound } from "@/react-library/miscel/NotFound";
 import { IoSettingsOutline } from "react-icons/io5";
 import { ChatSettings } from "./chat-settings";
 import { Editor } from "@monaco-editor/react";
-
+import { MonacoBinding } from "y-monaco";
+import * as Y from "yjs";
+import { SocketIOProvider } from "y-socket.io";
+import { baseURL } from "@/react-library/auth/context";
 
 export const Chat = () => {
     const [messages, setMessages] = useState(null);
     const { user, axiosInstance } = useAuthContext();
-    const { socket, onlineUsers } = useSocketContext();
+    const { socket, onlineUsers, setOnlineUsers } = useSocketContext();
     const { register, reset, handleSubmit, watch } = useForm();
     const { id } = useParams()
     const [partner, setPartner] = useState(null)
     const [loading, setLoading] = useState(false)
     const [board, setBoard] = useState("editor")
+    const editorRef = useRef(null);
+    const ydoc = useMemo(() => new Y.Doc(), []);
+    const yText = ydoc.getText("monaco", [ydoc]);
+    
+
+    function handleMount(editor) {
+        editorRef.current = editor;
+        const provider = new SocketIOProvider(baseURL, "monaco", ydoc, {
+            autoConnect: true,
+        });
+        const monacoBinding = new MonacoBinding(yText, editorRef.current.getModel(), new Set([editorRef.current]), provider.awareness);
+    }
+
+    useEffect(() => {
+        if(  !editorRef.current || !user) return;
+
+        
+
+        // provider.awareness.setLocalStateField("user", {
+        //     name: user.name,
+        //     username: user.username,
+        // });
+
+        // provider.awareness.on("change", () => {
+        //     const states = Array.from(provider.awareness.getStates().values());
+        //     setOnlineUsers( states.map(state => state.user).filter(u => Boolean(u.username) ) )
+        // });
+
+    }, [editorRef, user])
+
+
+    async function FetchMessage() {
+        setLoading(true)
+        try {
+            let res = await axiosInstance.post('/chat/fetch-message', { id });
+            setPartner(res.data.partner);
+            console.log(res.data)
+        } catch (err) {
+            console.log(err);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
 
     
 
 
     useEffect(() => {
-        if (!socket || !partner) return;
-
-        const handleReceiveMessage = (data) => {
-            console.log("message received:", data, partner);
-            if (partner.username !== data.messages[0].sender) return;
+        if (!id || !user) return;
+        FetchMessage();
+    }, [id, user])
 
 
-
-            setMessages(prevnew_messages => {
-
-                let new_messages = prevnew_messages;
-                new_messages = new_messages.concat(data.messages);
-                return new_messages;
-            });
-        };
-
-        socket.on("receive_message", handleReceiveMessage);
-
-        return () => {
-            socket.off("receive_message", handleReceiveMessage);
-        };
-
-    }, [socket, partner]);
-
-
-
-    
+    if (!partner) return <Loading />
 
     return (
-        <div className="relative h-[calc(100vh-60px)] grow bg-(--color1)"  >
-            <div className="h-10 absolute p-2 top-0 left-0 right-0 bg-(--color1) flex z-10 gap-4 items-center  justify-between px-12" >
+        <div className="grow  flex flex-col bg-(--color1a) justify-between"  >
+
+            <div className="h-10 min-h-[2rem] flex justify-between px-8 items-center" >
                 <div className="flex gap-2 items-center" >
                     {partner.name} {onlineUsers[partner.username] ? <div className="h-2 w-2 rounded-full bg-green-400" ></div> : ""}
                 </div>
 
-                <IoSettingsOutline onClick={() => setBoard(prev => prev === 'message' ? 'settings' : 'message')} className="cursor-pointer" />
+                <IoSettingsOutline onClick={() => setBoard(prev => prev === 'editor' ? 'settings' : 'editor')} className="cursor-pointer" />
 
             </div>
 
-            {
-                board === "editor" && <Editor 
-                    height="100%"
-                    defaultLanguage="javascript"
-                    defaultValue="// Start coding..."
-                    theme="vs-dark"
-                />
-            }
+            <div className="h-[calc(100vh-6rem)] border bg-red-700" >
 
-            {
-                board === "settings" && <ChatSettings partner={partner} />
-            }
+                {
+                    board === "editor" && <Editor
+                        height="100%"
+                        defaultLanguage="javascript"
+                        defaultValue="// Start coding..."
+                        theme="vs-dark"
+                        onMount={handleMount}
+                    />
+                }
+
+                {
+                    board === "settings" && <ChatSettings partner={partner} />
+                }
+
+            </div>
 
 
 

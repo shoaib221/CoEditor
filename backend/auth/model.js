@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: "student"
     },
-    constact: {
+    contact: {
         type: String,
     },
     location: {
