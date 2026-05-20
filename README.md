@@ -37,8 +37,8 @@ This is a real-time chat application that supports one-to-one and group messagin
 - multer (for media uploads)
 
 **Deployment**
-- Backend - Render
-- Frontend - Netlify
+- Frontend - [Netlify](https://coeditor-shoaib221.netlify.app/)
+- Backend - [Render](https://express-practice-xbf9.onrender.com)
 
 
 ---
