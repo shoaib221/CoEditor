@@ -33,12 +33,14 @@ This is a real-time chat application that supports one-to-one and group messagin
 **Storage:**
 - Cloud storage through MongoDB
 
----
-
 ## 📦 Packages Used
 - multer (for media uploads)
 
 ---
+
+
+## Deployment
+- Render
 
 ## 🧑‍💻 Setup Instructions
 
