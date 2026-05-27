@@ -11,7 +11,7 @@ import { LuAudioLines } from "react-icons/lu";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
-import { usePagination } from '@/react-library/pagination/pagination2'
+import { usePagination } from '@/react-library/pagination/pagination2';
 import { PageTag, SearchTag } from "@/react-library/pagination/pagination2";
 import { toast } from "react-toastify";
 import { useConfirmer } from "@/react-library/miscel/confirmer";
@@ -19,13 +19,13 @@ import { useConfirmer } from "@/react-library/miscel/confirmer";
 
 export const ChatSettings = (props) => {
     
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/chat/friends" });
+    
     const { axiosInstance, user } = useAuthContext();
     const navigate = useNavigate();
     console.log(props.partner);
     
 
-    const { Tag: UnfriendConfirmerTag, Init: UnfriendConfirmerInit, procede: unfriendProcede } = useConfirmer("Are you sure to unfriend ?")
+    const { Tag: UnfriendConfirmerTag, Init: UnfriendConfirmerInit, procede: unfriendProcede } = useConfirmer("Are you sure to unfriend?")
 
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export const ChatSettings = (props) => {
 
         async function Unfriend() {
             try {
-                await axiosInstance.post("/chat/unfriend", { friend: props.partner });
+                await axiosInstance.post("/editor/unfriend", { friend: props.partner });
                 toast.success("Unfriended");
                 
             }

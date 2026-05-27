@@ -14,40 +14,9 @@ export const SocketProvider = ({ children }) => {
 
 
     useEffect(() => {
-        return; // 🔥 TEMP FIX  
+        return; // 
 
-        let socketInstance;
-
-        const connectSocket = async () => {
-            const token = await auth.currentUser.getIdToken(true); // 🔥 FIX
-
-            socketInstance = io(baseURL, {
-                transports: ["websocket"],
-                auth: { token },
-            });
-
-            socketInstance.on("connect", () => {
-                console.log("Socket connected:", socketInstance.id);
-            });
-
-            socketInstance.on("connect_error", (err) => {
-                console.error("Socket error:", err.message);
-            });
-
-            setSocket(socketInstance);
-
-            socketInstance.on("online-users", (data) => {
-                console.log("Online users:", data.onlineUserMap);
-                setOnlineUsers(data.onlineUserMap);
-            });
-        };
-
-        connectSocket();
-
-        return () => {
-            if (socketInstance) socketInstance.disconnect();
-            setSocket(null);
-        };
+        
     }, [user]);
 
     return (

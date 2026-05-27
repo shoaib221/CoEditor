@@ -356,7 +356,7 @@ authRouter.post("/count", VisitCount)
 authRouter.post("/register", Register);
 authRouter.post("/login", Login);
 authRouter.get("/google", GoogleLogin);
-authRouter.post("/fb-register", requireAuth, FirebaseRegister);
+authRouter.post("/fb-register",  FirebaseRegister);
 authRouter.get("/users", requireAuth, requireAdmin, FetchUsers);
 authRouter.post("/change-role", requireAuth, requireAdmin, ChangeRole)
 authRouter.delete("/user/:id", requireAuth, requireAdmin, DeleteUser)

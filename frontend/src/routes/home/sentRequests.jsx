@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 
 export function SentRequests() {
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/chat/sent-requests" });
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/sent-requests" });
     const { axiosInstance } = useAuthContext();
 
     async function CancelRequest(receiver) {

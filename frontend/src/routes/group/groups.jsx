@@ -1,26 +1,27 @@
-import { useAuthContext } from "@/react-library/auth/context"
+import { useAuthContext } from "@/react-library/auth/context";
 import { PageTag, SearchTag, usePagination } from "@/react-library/pagination/pagination2";
 import { useSocketContext } from "@/react-library/socket/socket";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 export const CreateGroup = (props) => {
     const { axiosInstance } = useAuthContext();
-    const [name, setName] = useState("")
-    const [error, setError] = useState(null)
+    const [name, setName] = useState("");
+    const [error, setError] = useState(null);
 
     async function createGroup () {
         try {
-            let res = await axiosInstance.post( '/chat/create-group', { newGroup: name } );
-            setName("")
+            let res = await axiosInstance.post( '/editor/create-group', { newGroup: name } );
+            setName("");
             setError(null);
             toast.success("Group created successfully");
             props.refetchGroups();
         } catch(err) {
             console.log(err);
-            setError(err.response.data.error)
-            toast.error(err.response.data.error);
+            setError(err.response.data.error);
+            toast.error(err.response.data.message);
         }
     }
 
@@ -31,7 +32,7 @@ export const CreateGroup = (props) => {
             <div className="flex w-full max-w-[600px] gap-2 mx-auto" >
                 
                 <input placeholder="Group name" className="grow input-11" value={name} onChange={(e)=> setName( e.target.value )} />
-    
+
                 
                 <button onClick={createGroup} className="button-4" >Submit</button>
 
@@ -44,10 +45,14 @@ export const CreateGroup = (props) => {
 
 
 export const Groups = () => {
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/chat/fetch-groups" });
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/fetchgroups" });
     const { axiosInstance } = useAuthContext();
     const navigate = useNavigate();
-    const { onlineUsers } = useSocketContext()
+    const { onlineUsers } = useSocketContext();
+
+    useEffect(() => {
+        if(data) console.log(data)
+    }, [data])
 
     return (
         <div className="px-2" >
@@ -60,10 +65,11 @@ export const Groups = () => {
             <SearchTag searchFor={searchFor} setSearchFor={setSearchFor} fetchData={fetchData} />
 
             <div className="flex flex-col gap-4 p-4 w-full max-w-200 mx-auto" >
-                { data && data.map( (elem, _) => <div onClick={ () => navigate(`/group-chat/${ elem._id.toString() }`) } className="box-13 p-2" key={_} >{ elem.name }</div> ) }
+                { data && data.map( (elem, _) => <div onClick={ () => navigate(`/group/${ elem.group_id.toString() }`) } className="box-13 p-2" key={_} >{ elem.group_name }</div> ) }
             </div>
 
             <PageTag page={page} pages={pages} setPage={setPage} loading={loading} data={data} />
         </div>
     )
 }
+

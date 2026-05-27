@@ -1,27 +1,48 @@
 import { useAuthContext } from "@/react-library/auth/context";
 import { usePagination, PageTag, SearchTag } from "@/react-library/pagination/pagination2";
 import { useEffect, useCallback, useState } from "react"
-import '../../react-library/Box/box1.css'
+
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSocketContext } from "@/react-library/socket/socket";
 import { useConfirmer } from "@/react-library/miscel/confirmer";
 
 
-export function Friends() 
-{
-    
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/friends" });
+export function NonMemberFriends({ group }) {
+    console.log(group)
+    let url =  `/editor/fetch-non-members/${ group._id.toString() }`
+    console.log(url)
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url });
     const { axiosInstance } = useAuthContext();
     const navigate = useNavigate();
     const { onlineUsers } = useSocketContext();
     const [friend, setFriend] = useState(null);
 
-    
+
+
+
+
+    async function AddToGroup(new_member) {
+
+        try {
+            let res = await axiosInstance.post('/chat/add-to-group', { new_member, group: props.group });
+            let new_map = membersMap;
+            new_map.add(new_member._id.toString())
+            setMembersMap(new_map)
+            toast.success("Member added successfully")
+        } catch (err) {
+            console.log(err);
+            alert("error");
+        }
+
+    }
+
+
+
 
     return (
         <div className="px-2" >
-            
+
 
             <SearchTag searchFor={searchFor} setSearchFor={setSearchFor} fetchData={fetchData} />
 

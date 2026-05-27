@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 
 
 export function FriendRequests() {
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/chat/friend-requests" });
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/friend-requests" });
     const { axiosInstance } = useAuthContext();
 
     async function CancelRequest(sender , verdict ) {
         try {
-            let res = await axiosInstance.post( "/chat/reject-request", { sender, verdict } );
+            let res = await axiosInstance.post( "/editor/reject-request", { sender, verdict } );
             fetchData();
             toast.success("request Cancelled");
         }

@@ -86,7 +86,7 @@ export function SearchTag({  searchFor,  setSearchFor, fetchData  }) {
 
 
 function Users (  ) {
-    const { data, loading, page, pages, setPage, searchBy, setSearchBy, searchFor, setSearchFor, fetchData } = usePagination11( { url: "/chat/users" } );
+    const { data, loading, page, pages, setPage, searchBy, setSearchBy, searchFor, setSearchFor, fetchData } = usePagination( { url: "/chat/users" } );
 
     const searchParams = [
         { value: 'friend', label: "Friends" },

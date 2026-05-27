@@ -1,27 +1,45 @@
 import { useAuthContext } from "@/react-library/auth/context";
 import { usePagination, PageTag, SearchTag } from "@/react-library/pagination/pagination2";
 import { useEffect, useCallback, useState } from "react"
-import '../../react-library/Box/box1.css'
+
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSocketContext } from "@/react-library/socket/socket";
 import { useConfirmer } from "@/react-library/miscel/confirmer";
 
 
-export function Friends() 
-{
-    
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/friends" });
+export function GroupMembers({ group }) {
+
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: `/editor/fetch-group-members/${ group._id.toString() }` });
     const { axiosInstance } = useAuthContext();
     const navigate = useNavigate();
     const { onlineUsers } = useSocketContext();
     const [friend, setFriend] = useState(null);
 
-    
+
+
+    async function RemoveFromGroup(member) {
+        try {
+            let res = await axiosInstance.post('/editor/remove-from-group', { member, group: props.group });
+            let new_map = membersMap;
+            new_map.delete(member._id.toString())
+            setMembersMap(new_map)
+            toast.success("Member removed successfully")
+        } catch (err) {
+            console.log(err);
+            alert("error");
+        }
+    }
+
+
+
+
+
+
 
     return (
         <div className="px-2" >
-            
+
 
             <SearchTag searchFor={searchFor} setSearchFor={setSearchFor} fetchData={fetchData} />
 

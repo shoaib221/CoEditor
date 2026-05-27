@@ -14,8 +14,11 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
 
-export const baseURL = "http://localhost:4000";
+export const baseURL = "http://localhost:4000/api";
+export const backendSocket = "ws://localhost:4000"
+
 // export const baseURL = "https://express-practice-xbf9.onrender.com";
+// export const backendSocket = "wss://express-practice-xbf9.onrender.com";
 
 const axiosInstance = axios.create({
     baseURL,
@@ -91,7 +94,7 @@ export const AuthProvider = ({ children }) => {
 
             const res = await axiosInstance.post("/auth/fb-register", firebaseUser);
 
-            const fullUser = { ...firebaseUser, ...res.data.user }; 
+            const fullUser = {  ...res.data.user }; 
             setUser(fullUser);
         } catch (err) {
             toast.error("Authentication failed");

@@ -31,7 +31,7 @@ This is a real-time chat application that supports one-to-one and group messagin
 - WebSocket (via Socket.IO)
 
 **Storage:**
-- Cloud storage through MongoDB
+- Cloud storage through MongoDB 
 
 ---
 

@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 
 
 export function Users() {
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/chat/users" });
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/users" });
     const { axiosInstance } = useAuthContext();
 
     async function SendFriendrequest(receiver) {
         try {
-            let res = await axiosInstance.post( "/chat/send-friend-request", { receiver } );
+            let res = await axiosInstance.post( "/editor/send-friend-request", { receiver } );
             fetchData();
             toast.success("Friend Request Sent");
         }
