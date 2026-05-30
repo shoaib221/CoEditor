@@ -1,6 +1,6 @@
 # 💬 CoEditor
 
-This is a real-time chat application that supports one-to-one and group messaging. Users can exchange text messages as well as share photos, videos, and voice recordings instantly. The backend is built using Express.js and Socket.IO to enable fast and reliable real-time communication.
+This is a real-time web application through which users can code simultaneously with others users and groups. 
 
 ---
 
