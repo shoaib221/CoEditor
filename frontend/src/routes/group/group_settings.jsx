@@ -25,8 +25,9 @@ export const GroupSettings = (props) => {
 
         async function DeleteGroup() {
             try {
-                await axiosInstance.post("/chat/delete-group", { group_id: props.group._id });
+                await axiosInstance.post("/editor/delete-group", { group_id: props.group._id });
                 toast.success("Group deleted successfully");
+                navigate('/')
             } catch (err) {
                 console.log(err.response.data.error);
             }
@@ -41,8 +42,9 @@ export const GroupSettings = (props) => {
 
         async function LeaveGroup() {
             try {
-                await axiosInstance.post("/chat/leave-group", { group_id: props.group._id })
+                await axiosInstance.post("/editor/leave-group", { group_id: props.group._id })
                 toast.success("You have successfully left this group");
+                navigate('/');
             } catch (err) {
                 console.log(err.response.data.error)
             }
@@ -62,7 +64,7 @@ export const GroupSettings = (props) => {
 
             <div className="h-10" ></div>
 
-            <div className="header-11" >Friends</div>
+            <div className="header-11" >Add New Members</div>
             <NonMemberFriends  { ...props }  />
 
             <div className="h-20" ></div>

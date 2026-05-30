@@ -87,22 +87,22 @@ export const FetchGroups = async (req, res, next) => {
 export const AddToGroup = async (req, res, next) => {
     console.log("add to group")
     try {
-        const { new_member, group_name } = req.body
-        console.log(new_member, group_name)
+        const { new_member, group } = req.body
+        console.log(new_member, group)
 
-        const group = await Group.findOne({ name: group_name, admin: req.username })
-        const nmember = await User.findOne({ username: new_member })
-        const new_data = new GroupMembers({
+        
+        const nmember = await User.findOne({ username: new_member.username })
+        const new_data = await GroupMembers.create({
             group_id: group._id,
             group_name: group.name,
-            member: new_member,
+            member: new_member.username,
             photo: nmember.photo,
             admin: req.username
         })
 
-        const saved_data = await new_data.save()
+        
 
-        res.status(200).json(saved_data)
+        res.status(200).json({})
     } catch (err) {
         res.status(400).json({ error: err.message })
         console.log(err)
@@ -113,15 +113,17 @@ export const AddToGroup = async (req, res, next) => {
 export const DeleteFromGroup = async (req, res, next) => {
     console.log("delete from group")
     try {
-        const { group_id, member } = req.body
-        await GroupMembers.deleteOne({ group_id, member })
-        res.status(200).json("ok")
+        const { group, member } = req.body
+        console.log(group, member)
+        await GroupMembers.deleteMany({ group_id: group._id, member: member.username })
+        let response = await GroupMembers.find( { group_id: group._id } )
+        console.log(response)
+        res.status(200).json( { message: "Succeful", success: true } )
     } catch (err) {
-        res.status(400).json({ error: err.message })
+        console.log(err)
+        res.status(400).json({ error: err.message, success: false })
     }
-    finally {
-        next()
-    }
+    
 }
 
 
@@ -262,11 +264,13 @@ export const DeleteGroup = async (req, res, next) => {
     console.log("delete group")
     try {
         const { group_id } = req.body
+        const group = await Group.find( { _id: group_id } )
         await Group.deleteOne({ _id: group_id })
         await GroupMembers.deleteMany({ group_id })
-        await GroupMessage.deleteMany({ group_id })
-        res.status(200).json("ok")
+        await Document.deleteMany( { roomId: group.roomId } )
+        res.status(200).json({ success: true, message: "successful" })
     } catch (err) {
+        console.log(err)
         res.status(400).json({ error: err.message })
     }
 }
@@ -276,9 +280,10 @@ export const LeaveGroup = async (req, res, next) => {
     console.log("leave group")
     try {
         const { group_id } = req.body
-        await GroupMembers.deleteOne({ member: req.username });
-        res.status(200).json("Left From The Group")
+        await GroupMembers.deleteOne({ member: req.username, group_id });
+        res.status(200).json({ success: true, message: "Left The Group" })
     } catch (err) {
+        console.log( err );
         res.status(400).json({ error: err.message })
     }
 }

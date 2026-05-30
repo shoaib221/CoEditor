@@ -16,12 +16,12 @@ editorRouter.get("/fetch-users", requireAuth, FetchUsers);
 
 editorRouter.post("/create-group", requireAuth, CreateGroup);
 editorRouter.get("/fetchgroups", requireAuth, FetchGroups);
-editorRouter.post("/addtogroup", requireAuth, AddToGroup);
+editorRouter.post("/add-to-group", requireAuth, AddToGroup);
 editorRouter.get("/fetch-group-members/:group_id", requireAuth, FetchGroupMembers);
 editorRouter.get("/fetch-non-members/:group_id", requireAuth, FetchNonMemberFriends)
-editorRouter.post("/deletemember", requireAuth, DeleteFromGroup);
-editorRouter.post("/deletegroup", requireAuth, DeleteGroup);
-editorRouter.post("/leavegroup", requireAuth, LeaveGroup);
+editorRouter.post("/remove-from-group", requireAuth, DeleteFromGroup);
+editorRouter.post("/delete-group", requireAuth, DeleteGroup);
+editorRouter.post("/leave-group", requireAuth, LeaveGroup);
 editorRouter.get("/group/:id" , requireAuth, GetGroup );
 
 

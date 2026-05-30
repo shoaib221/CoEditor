@@ -14,19 +14,23 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
 
-export const baseURL = "http://localhost:4000/api";
-export const backendSocket = "ws://localhost:4000"
+// export const backendURL = "http://localhost:4000/api";
+// export const backendSocket = "ws://localhost:4000"
 
-// export const baseURL = "https://express-practice-xbf9.onrender.com";
-// export const backendSocket = "wss://express-practice-xbf9.onrender.com";
+
+export const backendURL = "/api";
+const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+export const backendSocket = `${protocol}//${window.location.host}`;
+export const baseURL = backendURL;
+
 
 const axiosInstance = axios.create({
-    baseURL,
+    baseURL: backendURL,
     headers: { "Content-Type": "application/json" },
 });
 
 const axiosFormData = axios.create({
-    baseURL,
+    baseURL: backendURL,
     headers: { "Content-Type": "multipart/form-data" },
 });
 
@@ -85,7 +89,7 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
-        console.log( "firebaseuser", firebaseUser )
+        console.log("firebaseuser", firebaseUser)
 
         setupInterceptors(firebaseUser);
 
@@ -94,7 +98,7 @@ export const AuthProvider = ({ children }) => {
 
             const res = await axiosInstance.post("/auth/fb-register", firebaseUser);
 
-            const fullUser = {  ...res.data.user }; 
+            const fullUser = { ...res.data.user };
             setUser(fullUser);
         } catch (err) {
             toast.error("Authentication failed");

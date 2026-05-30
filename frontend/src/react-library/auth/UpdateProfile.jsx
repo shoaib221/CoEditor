@@ -136,7 +136,7 @@ export const UpdateProfile = () => {
                     </div>
                     <br/>
 
-                    <div className="text-center" > {user?.email} </div>
+                    <div className="text-center" > {user?.username} </div>
 
                 </div>
 

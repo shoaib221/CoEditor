@@ -12,7 +12,7 @@ export function NonMemberFriends({ group }) {
     console.log(group)
     let url =  `/editor/fetch-non-members/${ group._id.toString() }`
     console.log(url)
-    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url });
+    const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData: refetchFriends } = usePagination({ url });
     const { axiosInstance } = useAuthContext();
     const navigate = useNavigate();
     const { onlineUsers } = useSocketContext();
@@ -25,16 +25,13 @@ export function NonMemberFriends({ group }) {
     async function AddToGroup(new_member) {
 
         try {
-            let res = await axiosInstance.post('/chat/add-to-group', { new_member, group: props.group });
-            let new_map = membersMap;
-            new_map.add(new_member._id.toString())
-            setMembersMap(new_map)
+            let res = await axiosInstance.post('/editor/add-to-group', { new_member, group });
+            await refetchFriends()
             toast.success("Member added successfully")
         } catch (err) {
             console.log(err);
             alert("error");
         }
-
     }
 
 
@@ -44,15 +41,19 @@ export function NonMemberFriends({ group }) {
         <div className="px-2" >
 
 
-            <SearchTag searchFor={searchFor} setSearchFor={setSearchFor} fetchData={fetchData} />
+            <SearchTag searchFor={searchFor} setSearchFor={setSearchFor} fetchData={refetchFriends} />
 
             <div className="flex flex-col gap-4 p-4 max-w-200 mx-auto" >
 
                 {data && data.length > 0 && data.map((elem, i) => (
-                    <div key={i} className="box-13 flex justify-between" onClick={() => navigate(`/friend/${elem._id.toString()}`)} >
+                    <div key={i} className="box-13 flex justify-between" >
                         <div>
                             <div className="text-(--color4) flex gap-2 items-center" > {elem.name} {"  "} <div className={`h-2 w-2 rounded-full ${onlineUsers[elem.username] ? 'bg-green-600' : 'bg-(--color1)'}`} ></div> </div>
                             <div> {elem.username} </div>
+                        </div>
+
+                        <div onClick={ () => AddToGroup(elem) } >
+                            Add as member
                         </div>
                     </div>
                 ))}
@@ -63,7 +64,4 @@ export function NonMemberFriends({ group }) {
 
         </div>
     )
-
-
-
 }
