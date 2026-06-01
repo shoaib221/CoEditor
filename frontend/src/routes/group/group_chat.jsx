@@ -65,7 +65,7 @@ export const GroupChat = () => {
                 <IoSettingsOutline onClick={() => setBoard(prev => prev === 'editor' ? 'settings' : 'editor')} className="cursor-pointer" />
             </div>
 
-            <div className="h-[calc(100vh-6rem)] border bg-red-700" >
+            <div className="h-[calc(100vh-6rem)] border" >
 
                 {board === 'editor' ? <MonacoEditor roomId={partner.roomId} /> :  <GroupSettings group={partner} /> }
 

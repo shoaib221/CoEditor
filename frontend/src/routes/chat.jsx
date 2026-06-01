@@ -66,7 +66,7 @@ export const Chat = () =>  {
 
             </div>
 
-            <div className="h-[calc(100vh-6rem)] border bg-red-700" >
+            <div className="h-[calc(100vh-6rem)] border" >
 
                 {
                     board === "editor" && <MonacoEditor roomId = { partner.friendship.roomId } />
