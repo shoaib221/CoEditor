@@ -3,27 +3,26 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import cors from "cors";
 import http from "http";
 import { WebSocketServer } from "ws";
 import mongoose from "mongoose";
-import * as Y from "yjs";
 import admin from "firebase-admin";
 
 
 
 export const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
-
-
 export const server = http.createServer(app);
 
 
+
 export const wss = new WebSocketServer({
-    server,
+    server
 });
+
+
+
+
+
 
 function firebaseConfigRun() {
 
@@ -45,3 +44,62 @@ function firebaseConfigRun() {
 firebaseConfigRun();
 
 export const firebaseAdmin = admin;
+
+
+
+// onlineWss.on("connection", async (socket, req) => {
+
+//     console.log("WebSocket connection received online");
+//     const params = new URL(  // converted to URL
+//         req.url,
+//         "http://localhost"
+//     );
+
+
+
+
+//     const authToken = params.searchParams.get("authToken");
+
+//     const user = await FirebaseAuthService.verifyToken(authToken);
+
+//     if (!user) {
+//         socket.close();
+//         return;
+//     }
+
+
+//     console.log("User connected to websocket");
+
+//     onlineUsers.set(user.username, socket);
+
+//     const users = Array.from(onlineUsers.keys());
+
+//     for (const [username, userSocket] of onlineUsers) {
+//         if (userSocket.readyState === 1) {
+//             userSocket.send(
+//                 JSON.stringify({
+//                     header: "online",
+//                     users
+//                 })
+//             );
+//         }
+//     }
+
+
+//     socket.on("close", async () => {
+//         onlineUsers.delete(user.username);
+//         const users = Array.from(onlineUsers.keys());
+
+//         for (const [username, userSocket] of onlineUsers) {
+//             if (userSocket.readyState === 1) {
+//                 userSocket.send(
+//                     JSON.stringify({
+//                         header: "online",
+//                         users
+//                     })
+//                 );
+//             }
+//         }
+//     });
+// });
+

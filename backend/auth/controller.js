@@ -10,6 +10,8 @@ import { oauth2Client } from "../utils/googleClient.js";
 import axios from "axios";
 import nodemailer from "nodemailer";
 import { v2 as cloudinary } from "cloudinary";
+import { JWTService, PasswordService } from "./service.js";
+import { firebaseAdmin } from "../utils/starter.js";
 
 
 cloudinary.config({
@@ -165,22 +167,27 @@ const UpdateProfile = async (req, res, next) => {
 const FirebaseRegister = async (req, res, next) => {
 
     try {
-        let user = req.body;
-        const hashedpassword = await hashy("Aa12345678");
-        let real_user = await User.findOne({ username: user.email });
+        let {  token } = req.body;
+        if (!token) throw Error('token required');
+        const userInfo = await firebaseAdmin.auth().verifyIdToken(token);
+        if (!userInfo) throw Error('Invalid token');
+        // console.log(userInfo)
+        const real_user = await User.findOne({ username: userInfo.email });
 
         if (!real_user) {
+            const hashedpassword = await PasswordService.hashPassword("Aa12345678");
             real_user = await User.insertOne({
-                username: user.email,
+                username: userInfo.email,
                 password: hashedpassword,
-                name: user.displayName,
-                photo: user.photoURL
+                name: userInfo.displayName,
+                photo: userInfo.photoURL
             })
         }
 
         res.status(200).json({ user: real_user })
 
     } catch (err) {
+        console.log(err)
         res.status(400).json({ error: err.message })
     } finally {
         console.log("firebase register")
@@ -266,25 +273,25 @@ export const SendMessage = async (req, res, next) => {
 
         const info = await transporter.sendMail({
             from: `"My App" <${process.env.EMAIL_USER}>`,
-            to: "shoaibtasrif326@gmail.com" ,
-            subject: "Get in touch" ,
+            to: "shoaibtasrif326@gmail.com",
+            subject: "Get in touch",
             text: message,
             html: `
-                <p> ${ message } </p>
+                <p> ${message} </p>
                 <div> Best Regards, </div>
-                <div> ${ name } </div>
-                <div> ${ phone } </div>
-                <div> ${ email } </div>
+                <div> ${name} </div>
+                <div> ${phone} </div>
+                <div> ${email} </div>
             `
         });
 
         await transporter.sendMail({
             from: `"My App" <${process.env.EMAIL_USER}>`,
-            to: email ,
-            subject: "Let us connect" ,
+            to: email,
+            subject: "Let us connect",
             text: message,
             html: `
-                <div> Dear ${ name }, </div>
+                <div> Dear ${name}, </div>
                 <p> Thanks for your knock. We will reply to your question very soon.</p>
                 <div> Best Regards, </div>
                 <div> ScholarStream </div>
@@ -299,7 +306,7 @@ export const SendMessage = async (req, res, next) => {
         });
 
     } catch (err) {
-        console.log( err.message )
+        console.log(err.message)
         res.status(400).json({
             error: err.message
         })
@@ -315,7 +322,7 @@ export const SendMessage = async (req, res, next) => {
 export const CloudinarySign = async (req, res, next) => {
 
     try {
-        
+
 
         const timestamp = Math.floor(Date.now() / 1000);
 
@@ -330,7 +337,7 @@ export const CloudinarySign = async (req, res, next) => {
             process.env.CLOUDINARY_API_SECRET
         );
 
-        
+
         res.status(200).json({
             timestamp,
             signature,
@@ -340,7 +347,7 @@ export const CloudinarySign = async (req, res, next) => {
         });
 
     } catch (error) {
-        console.log( err.message )
+        console.log(err.message)
         res.status(400).json({
             error: err.message
         })
@@ -356,14 +363,14 @@ authRouter.post("/count", VisitCount)
 authRouter.post("/register", Register);
 authRouter.post("/login", Login);
 authRouter.get("/google", GoogleLogin);
-authRouter.post("/fb-register",  FirebaseRegister);
+authRouter.post("/fb-register", FirebaseRegister);
 authRouter.get("/users", requireAuth, requireAdmin, FetchUsers);
 authRouter.post("/change-role", requireAuth, requireAdmin, ChangeRole)
 authRouter.delete("/user/:id", requireAuth, requireAdmin, DeleteUser)
 authRouter.get("/profile", requireAuth, Profile);
 authRouter.post("/profile", requireAuth, UpdateProfile)
 authRouter.post("/send-message", SendMessage)
-authRouter.get( "/cloudinary-sign", CloudinarySign )
+authRouter.get("/cloudinary-sign", CloudinarySign)
 
 
 // authRouter.get( "/init", requireAuthJWT, Init );

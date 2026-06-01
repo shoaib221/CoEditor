@@ -28,10 +28,6 @@ export const Chat = () =>  {
     const [partner, setPartner] = useState(null);
     const [loading, setLoading] = useState(false);
     const [board, setBoard] = useState("editor");
-    
-    
-
-    
 
 
     async function FetchFriend() {
@@ -63,7 +59,7 @@ export const Chat = () =>  {
 
             <div className="min-h-[2rem] flex justify-between px-8 items-center" >
                 <div className="flex gap-2 items-center" >
-                    {partner.name} { partner ? <div className="h-2 w-2 rounded-full bg-green-400" ></div> : ""}
+                    {partner.name} { partner ? <div className="h-2 w-2 rounded-full" ></div> : "" }
                 </div>
 
                 <IoSettingsOutline onClick={() => setBoard(prev => prev === 'editor' ? 'settings' : 'editor')} className="cursor-pointer" />

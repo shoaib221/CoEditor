@@ -48,7 +48,7 @@ export const Groups = () => {
     const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData } = usePagination({ url: "/editor/fetchgroups" });
     const { axiosInstance } = useAuthContext();
     const navigate = useNavigate();
-    const { onlineUsers } = useSocketContext();
+    
 
     useEffect(() => {
         if(data) console.log(data)

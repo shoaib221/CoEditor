@@ -23,6 +23,7 @@ const documentSchema = new mongoose.Schema(
     }
 );
 
+
 export const Document = mongoose.model("Document", documentSchema);
 
 

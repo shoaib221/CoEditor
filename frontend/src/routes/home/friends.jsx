@@ -4,7 +4,7 @@ import { useEffect, useCallback, useState } from "react"
 import '../../react-library/Box/box1.css'
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSocketContext } from "@/react-library/socket/socket";
+import { useSocketContext } from "@/react-library/socket/socket1";
 import { useConfirmer } from "@/react-library/miscel/confirmer";
 
 
@@ -30,7 +30,7 @@ export function Friends()
                 {data && data.length > 0 && data.map((elem, i) => (
                     <div key={i} className="box-13 flex justify-between" onClick={() => navigate(`/friend/${elem._id.toString()}`)} >
                         <div>
-                            <div className="text-(--color4) flex gap-2 items-center" > {elem.name} {"  "} <div className={`h-2 w-2 rounded-full ${onlineUsers[elem.username] ? 'bg-green-600' : 'bg-(--color1)'}`} ></div> </div>
+                            <div className="text-(--color4) flex gap-2 items-center" > {elem.name} {"  "} <div className={`h-2 w-2 rounded-full ${onlineUsers.has(elem.username) ? 'bg-green-600' : 'bg-(--color1)'}`} ></div> </div>
                             <div> {elem.username} </div>
                         </div>
                     </div>

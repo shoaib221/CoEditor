@@ -15,7 +15,6 @@ export function NonMemberFriends({ group }) {
     const { data, loading, page, pages, setPage, searchFor, setSearchFor, fetchData: refetchFriends } = usePagination({ url });
     const { axiosInstance } = useAuthContext();
     const navigate = useNavigate();
-    const { onlineUsers } = useSocketContext();
     const [friend, setFriend] = useState(null);
 
 
@@ -48,7 +47,7 @@ export function NonMemberFriends({ group }) {
                 {data && data.length > 0 && data.map((elem, i) => (
                     <div key={i} className="box-13 flex justify-between" >
                         <div>
-                            <div className="text-(--color4) flex gap-2 items-center" > {elem.name} {"  "} <div className={`h-2 w-2 rounded-full ${onlineUsers[elem.username] ? 'bg-green-600' : 'bg-(--color1)'}`} ></div> </div>
+                            <div className="text-(--color4) flex gap-2 items-center" > {elem.name} {"  "} <div className={`h-2 w-2 rounded-full`} ></div> </div>
                             <div> {elem.username} </div>
                         </div>
 

@@ -15,7 +15,7 @@ import { ThemeProvider } from '@/react-library/Theme/Theme.jsx';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { Chat } from './routes/chat.jsx';
-import { SocketProvider } from './react-library/socket/socket.jsx';
+import { SocketProvider } from './react-library/socket/socket1.jsx';
 import { GroupChat } from './routes/group/group_chat.jsx';
 
 

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import Editor from "@monaco-editor/react";
 import * as Y from "yjs";
 import { MonacoBinding } from "y-monaco";
-import { backendSocket } from "@/react-library/auth/context";
+import { backendSocket, useAuthContext } from "@/react-library/auth/context";
 
 
 export function MonacoEditor( { roomId } )
@@ -11,10 +11,12 @@ export function MonacoEditor( { roomId } )
     const wsRef = useRef(null);
     const ydocRef = useRef(new Y.Doc());
     const ytextRef = useRef( ydocRef.current.getText("code") );
-    console.log(roomId)
+    const { authToken } = useAuthContext();
+    console.log(roomId);
 
     useEffect(() => {
-        const ws = new WebSocket( `${backendSocket}?room=${roomId}` );
+        if( !roomId || !authToken ) return;
+        const ws = new WebSocket( `${backendSocket}?room=${roomId}&authToken=${authToken}` );
 
         ws.binaryType = "arraybuffer";
 
@@ -36,7 +38,10 @@ export function MonacoEditor( { roomId } )
 
         // receiving changes from other coders
         ws.onmessage = (event) => {
-            const update = new Uint8Array(event.data);
+            const message = JSON.parse(event.data);
+
+            if (message.header !== "update") return;
+            const update = new Uint8Array(message.update);
 
             Y.applyUpdate(
                 ydocRef.current,
@@ -48,7 +53,10 @@ export function MonacoEditor( { roomId } )
         const handleUpdate = (update) => {
             if ( ws.readyState === WebSocket.OPEN ) 
             {
-                ws.send(update);
+                ws.send( JSON.stringify({
+                    header: "update",
+                    update: Array.from(update)
+                }) );
             }
         };
 
@@ -62,11 +70,11 @@ export function MonacoEditor( { roomId } )
 
             ws.close();
         };
-    }, []);
+    }, [roomId, authToken]);
 
 
     // mounting monaco editor
-    const handleEditorMount = ( editor, monaco ) => {
+    const handleEditorMount = ( editor ) => {
         editorRef.current = editor;
 
         const model = editor.getModel();

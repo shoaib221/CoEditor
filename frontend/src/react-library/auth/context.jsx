@@ -15,13 +15,15 @@ export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
 
 export const backendURL = "http://localhost:4000/api";
-export const backendSocket = "ws://localhost:4000"
+export const backendSocket = "ws://localhost:4000";
 
 
 // export const backendURL = "/api";
 // const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
 // export const backendSocket = `${protocol}//${window.location.host}`;
-// export const baseURL = backendURL;
+
+
+export const baseURL = backendURL;
 
 
 const axiosInstance = axios.create({
@@ -38,6 +40,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [authToken, setAuthToken] = useState(null);
 
     const interceptors = useRef({ req: null, res: null });
 
@@ -56,7 +59,7 @@ export const AuthProvider = ({ children }) => {
         interceptors.current.req = axiosInstance.interceptors.request.use(
             async (config) => {
                 if (firebaseUser) {
-                    const token = await firebaseUser.getIdToken(true); // 🔥 FIX
+                    const token = await firebaseUser.getIdToken(true); 
                     config.headers.authorization = `Bearer ${token}`;
                 }
                 return config;
@@ -89,14 +92,17 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
-        console.log("firebaseuser", firebaseUser)
+        console.log("firebaseuser", firebaseUser);
 
-        setupInterceptors(firebaseUser);
+        
 
         try {
-            const token = await firebaseUser.getIdToken(true);
+            setupInterceptors(firebaseUser);
 
-            const res = await axiosInstance.post("/auth/fb-register", firebaseUser);
+            const token = await firebaseUser.getIdToken(true);
+            if(token) setAuthToken(token);
+
+            const res = await axiosInstance.post("/auth/fb-register", { token });
 
             const fullUser = { ...res.data.user };
             setUser(fullUser);
@@ -116,7 +122,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user, loading, LogOut, axiosInstance, axiosFormData }}
+            value={{ user, loading, LogOut, axiosInstance, axiosFormData, authToken }}
         >
             {children}
         </AuthContext.Provider>
