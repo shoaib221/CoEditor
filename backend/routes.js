@@ -12,8 +12,8 @@ mainRouter.use("/auth", authRouter);
 mainRouter.use("/test", testRouter);
 mainRouter.use("/editor", editorRouter);
 
-mainRouter.all(/.*/, (req, res) => {
-    res.status(404).json({ error: "Invalid route" })
+mainRouter.use( (req, res) => {
+    res.status(404).json({ error: "Invalid API route" })
 });
 
 

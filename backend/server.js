@@ -4,13 +4,16 @@
 import cors from "cors";
 import mongoose from "mongoose";
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
 
 import { app, server } from "./utils/starter.js";
 import { mainRouter } from "./routes.js";
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+
 
 app.use((req, res, next) => {
 	console.log("backend", new Date().toLocaleString());
@@ -19,9 +22,21 @@ app.use((req, res, next) => {
 
 app.use( "/api", mainRouter);
 
-app.all(/.*/, (req, res) => {
-	res.status(404).json({ error: "Invalid route from express" })
+
+
+// Catch-all for SPA routes
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res) => {
+    res.sendFile(
+        path.join(__dirname, "public", "index.html")
+    );
 });
+
+
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
