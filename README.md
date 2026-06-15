@@ -2,17 +2,14 @@
 
 This is a real-time web application through which users can code simultaneously with others users and groups. 
 
+👉 **[Live Demo](https://coeditor-4ofs.onrender.com)**
+
 ---
 
 ## ✨ Features
 
-- 💬 One-to-one private messaging
-- ⚡ Real-time messaging with WebSockets
-- 🖼 Send and receive images
-- 🎥 Share videos & audios
-- 🟢 Online/offline user status
-- 🔔 Real-time message updates
-- 🔐 Secure communication 
+- ⚡ Make friends and form groups
+- ⚡ Code simultaneously with friends & groups
 
 ---
 
@@ -21,23 +18,16 @@ This is a real-time web application through which users can code simultaneously 
 **Backend:**
 - Node.js  
 - Express.js  
-- Socket.IO
+- WebSocket
+- YJS
 
 **Frontend:**
 - React.js
 - Tailwind CSS
-
-**Real-Time Communication:**
-- WebSocket (via Socket.IO)
+- Monaco Editor
 
 **Storage:**
 - Cloud storage through MongoDB 
-
-**Packages Used**
-- multer (for media uploads)
-
-**Deployment**
-- [Render](https://express-practice-xbf9.onrender.com)
 
 
 ---
@@ -45,8 +35,8 @@ This is a real-time web application through which users can code simultaneously 
 ## 🧑‍💻 Setup Instructions
 
 ```
-git clone https://github.com/shoaib221/Chat.e.git
-cd Chat.e
+git clone https://github.com/shoaib221/CoEditor.git
+cd CoEditor/backend
 npm install
 npm run dev
 
