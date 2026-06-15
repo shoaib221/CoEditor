@@ -30,7 +30,7 @@ export function Users() {
             <div className="flex flex-col gap-4 p-4 max-w-200 mx-auto" >
 
                 {data && data.length > 0 && data.map((elem, i) => (
-                    <div key={i} className="box-15 flex justify-between" >
+                    <div key={i} className="box-16 flex justify-between" >
                         <div>
                         
                         <div className="text-(--color4)" > {elem.name} </div>
@@ -38,7 +38,7 @@ export function Users() {
                         
                         </div>
 
-                        <button onClick={() => SendFriendrequest( elem )} className="hover:opacity-80" >Add as friend</button>
+                        <button onClick={() => SendFriendrequest( elem )} className="hover:opacity-80 cursor-pointer" >Add as friend</button>
                     </div>
                 ))}
 

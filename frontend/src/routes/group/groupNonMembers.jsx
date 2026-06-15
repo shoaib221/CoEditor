@@ -45,14 +45,14 @@ export function NonMemberFriends({ group }) {
             <div className="flex flex-col gap-4 p-4 max-w-200 mx-auto" >
 
                 {data && data.length > 0 && data.map((elem, i) => (
-                    <div key={i} className="box-13 flex justify-between" >
+                    <div key={i} className="box-16 flex justify-between items-center" >
                         <div>
                             <div className="text-(--color4) flex gap-2 items-center" > {elem.name} {"  "} <div className={`h-2 w-2 rounded-full`} ></div> </div>
                             <div> {elem.username} </div>
                         </div>
 
-                        <div onClick={ () => AddToGroup(elem) } >
-                            Add as member
+                        <div onClick={ () => AddToGroup(elem) }  className="hover:opacity-80 cursor-pointer px-2" >
+                            Add 
                         </div>
                     </div>
                 ))}

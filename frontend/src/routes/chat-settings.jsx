@@ -60,27 +60,27 @@ export const ChatSettings = (props) => {
                 <div>{props.partner.username}</div>
             </span>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 mx-auto max-w-100 w-full p-4 gap-8" >
+            <div className="grid grid-cols-[6rem_1fr] mx-auto max-w-100 w-full p-4 gap-8" >
 
 
-                <div className="font-bold text-right" >Name</div>
+                <div className="font-bold" >Name</div>
                 <div>{props.partner.name}</div>
 
-                <div className="font-bold text-right" >Bio</div>
+                <div className="font-bold" >Bio</div>
                 <div>{props.partner.bio}</div>
 
-                <div className="font-bold text-right" >Profession</div>
+                <div className="font-bold" >Profession</div>
                 <div>{props.partner.profession}</div>
 
-                <div className="font-bold text-right" >Contact</div>
+                <div className="font-bold" >Contact</div>
                 <div>{props.partner.contact}</div>
 
-                <div className="font-bold text-right" >Location</div>
+                <div className="font-bold" >Location</div>
                 <div>{props.partner.location}</div>
 
 
-                <div className="font-bold text-right" >Want to unfriend ?</div>
-                <div onClick={ UnfriendConfirmerInit } className="text-(--color5) hover:opacity-80 cursor-pointer" >Unfriend</div>
+                <div className="font-bold" >Unfriend?</div>
+                <div onClick={ UnfriendConfirmerInit } className="text-(--color5) hover:opacity-80 cursor-pointer" >Proceed</div>
             </div>
 
             

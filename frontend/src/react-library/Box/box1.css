@@ -69,4 +69,13 @@
 }
 
 
+.box-16 {
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: all 0.6s;
+    box-shadow: 0px 1px 1px 0px var(--color2);
+}
 
+.box-16:hover {
+    box-shadow: 0px 0px 2px 2px var(--color2);
+}

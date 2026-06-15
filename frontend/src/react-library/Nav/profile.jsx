@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../auth/context";
 import { useNavigate } from "react-router-dom";
-import { ThemeButton3 } from "../Theme/Theme";
+
 
 
 
@@ -30,7 +30,7 @@ export const ProfileLogo1 = ({ image = "/avatar.jpg", }) => {
     return (
         <div className="relative flex gap-4 items-center" ref={dropdownRef}>
             
-            <ThemeButton3 />
+            
 
             <button
                 onClick={() => setOpen(!open)}

@@ -50,16 +50,16 @@ export const PageTag = ( { page, pages, setPage, loading, data } ) => {
 
     if( data && data.length > 0 ) return (
         <div className="flex gap-2 justify-center" >
-            { page > 1 && <div onClick={ () => setPage( prev => prev-1 ) } className="button-2" >Previous</div> }
+            { page > 1 && <div onClick={ () => setPage( prev => prev-1 ) } className="hover:opacity-80" >Previous</div> }
 
             { [ ...Array(pages).keys() ].map( i => (
-                <div key={i+1} onClick={ () => setPage(i+1) } className="button-2" >
+                <div key={i+1} onClick={ () => setPage(i+1) } className="button-6" >
                     {i+1}
                 </div>
             ) ) }
 
 
-            { page < pages && <div onClick={() => setPage( prev => prev +1 ) } className="button-2" >Next</div> }
+            { page < pages && <div onClick={() => setPage( prev => prev +1 ) } className="hover:opacity-80" >Next</div> }
 
             
         </div>

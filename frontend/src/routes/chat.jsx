@@ -57,7 +57,7 @@ export const Chat = () =>  {
     return (
         <div className="grow  flex flex-col bg-(--color1a) justify-between"  >
 
-            <div className="min-h-[2rem] flex justify-between px-8 items-center" >
+            <div className="min-h-[3rem] flex justify-between px-8 items-center" >
                 <div className="flex gap-2 items-center" >
                     {partner.name} { partner ? <div className="h-2 w-2 rounded-full" ></div> : "" }
                 </div>
@@ -66,7 +66,7 @@ export const Chat = () =>  {
 
             </div>
 
-            <div className="h-[calc(100vh-6rem)] border" >
+            <div className="h-[calc(100vh-6rem)]" >
 
                 {
                     board === "editor" && <MonacoEditor roomId = { partner.friendship.roomId } />

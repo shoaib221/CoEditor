@@ -75,10 +75,10 @@ export const GroupSettings = (props) => {
             <div className="flex flex-col gap-4 p-4 max-w-200 mx-auto rounded-lg border-2" >
                 {props.group.admin === user.username ? <div className="flex justify-between items-center" >
                     <div>Want to delete this group ?</div>
-                    <button onClick={ConfirmDeleteInit} style={{ color: "var(--color5)" }} className="hover:opacity-80" >Delete</button>
+                    <button onClick={ConfirmDeleteInit} style={{ color: "var(--color5)" }} className="hover:opacity-80 cursor-pointer" >Delete</button>
                 </div> : <div className="flex justify-between items-center" >
                     <div>Want to leave this group ?</div>
-                    <button onClick={ConfirmLeaveInit} style={{ color: "var(--color5)" }} className="hover:opacity-80" >Leave</button>
+                    <button onClick={ConfirmLeaveInit} style={{ color: "var(--color5)" }} className="hover:opacity-80 cursor-pointer" >Leave</button>
                 </div>}
             </div>
         </div>

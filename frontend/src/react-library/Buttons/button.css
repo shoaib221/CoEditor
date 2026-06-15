@@ -106,3 +106,23 @@
 .button-5:hover {
     opacity: .8;
 }
+
+
+.button-6 {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .3rem .7rem;
+    border-radius: .5rem;
+    background-color: var(--color4);
+    color: var(--color1);
+    cursor: pointer;
+    transition: all 0.5s;
+    box-shadow: 0px 0px 5px var(--color1a);
+}
+
+.button-6:hover {
+    opacity: .8;
+    box-shadow: 0px 0px 5px var(--color2);
+}

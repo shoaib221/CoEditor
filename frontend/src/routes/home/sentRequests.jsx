@@ -11,7 +11,7 @@ export function SentRequests() {
 
     async function CancelRequest(receiver) {
         try {
-            let res = await axiosInstance.post( "/chat/cancel-request", { receiver } );
+            let res = await axiosInstance.post( "/editor/cancel-request", { receiver } );
             fetchData();
             toast.success("request Cancelled");
         }
@@ -30,7 +30,7 @@ export function SentRequests() {
             <div className="flex flex-col gap-4 p-4 max-w-200 mx-auto" >
 
                 {data && data.length > 0 && data.map((elem, i) => (
-                    <div key={i} className="box-15 flex justify-between" >
+                    <div key={i} className="box-16 flex justify-between" >
                         <div>
                         
                         <div className="text-(--color4)" > {elem.name} </div>
@@ -38,7 +38,7 @@ export function SentRequests() {
                         
                         </div>
 
-                        <button onClick={() => CancelRequest( elem )} className="hover:opacity-80" >Cancel Request</button>
+                        <button onClick={() => CancelRequest( elem )} className="hover:opacity-80 text-(--color5) cursor-pointer" >Cancel</button>
                     </div>
                 ))}
 
